@@ -1,0 +1,27 @@
+{
+  "name": "forfuture-blog",
+  "version": "1.0.0",
+  "description": "fftB | Forfuture Blog",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo no tests",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forfuturellc/blog.git"
+  },
+  "keywords": [
+    "forfuture",
+    "blog"
+  ],
+  "author": "GochoMugo (www.gmugo.in)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/forfuturellc/blog/issues"
+  },
+  "homepage": "https://github.com/forfuturellc/blog#readme",
+  "devDependencies": {
+    "bower": "^1.7.9"
+  }
+}

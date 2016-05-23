@@ -18,3 +18,7 @@ LOG_TITLE="deps"
 log "installing jekyll" 0
 gem install jekyll
 jekyll --version
+
+
+log "installing dependencies using \`npm'" 0
+npm install

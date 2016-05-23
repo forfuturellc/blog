@@ -12,6 +12,12 @@ homepage: http://www.forfuture.co.ke
 markdown: kramdown
 show_build_info: true
 exclude: [
+    ".bowerrc",
+    ".editorconfig",
     ".gh-pages/",
+    ".gitignore",
+    ".travis.yml",
     "bower.json",
+    "node_modules/",
+    "package.json",
 ]
