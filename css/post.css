@@ -1,0 +1,90 @@
+@font-face {
+  font-family: Lato;
+  src: url("../lib/fonts/lato/lato-regular.ttf"); }
+/**
+ * Reset some basic elements
+ */
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, Raleway, Helvetica, Arial, sans-serif; }
+
+/**
+ * Page header
+ */
+.page-header {
+  margin: 0;
+  padding: 0;
+  text-align: center; }
+  .page-header nav {
+    padding: 10px; }
+  .page-header nav ul {
+    list-style: none; }
+  .page-header nav li {
+    display: inline-block; }
+    .page-header nav li:before {
+      content: "["; }
+    .page-header nav li:after {
+      content: "]"; }
+  .page-header nav a {
+    padding: 10px;
+    text-decoration: underline; }
+
+.page-footer {
+  font-size: 10px;
+  padding: 60px;
+  text-align: center; }
+
+#site-build {
+  font-size: 12px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+  #site-build a {
+    color: #ccc;
+    text-decoration: underline; }
+
+.post-header {
+  padding: 20px;
+  margin: 40px 2px;
+  text-align: center; }
+
+.post-title {
+  font-size: 24px;
+  padding: 10px; }
+
+.post-meta span {
+  display: block;
+  font-size: 12px; }
+.post-meta i {
+  margin-right: 4px; }
+
+.post blockquote {
+  border: 0;
+  font-size: 14px;
+  margin: 10px 18px; }
+.post h2 {
+  margin: 18px 0; }
+.post h3 {
+  margin: 16px 0; }
+.post h4 {
+  margin: 14px 0; }
+.post h5 {
+  margin: 12px 0; }
+.post h6 {
+  margin: 10px 0; }
+.post p {
+  margin-top: 8px;
+  text-align: justify; }
+.post sup:before {
+  content: "["; }
+.post sup:after {
+  content: "]"; }
+.post ul, .post ol {
+  padding-left: 18px;
+  margin: 12px; }
+.post pre {
+  margin: 12px; }

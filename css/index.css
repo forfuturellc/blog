@@ -1,0 +1,76 @@
+@font-face {
+  font-family: Lato;
+  src: url("../lib/fonts/lato/lato-regular.ttf"); }
+/**
+ * Reset some basic elements
+ */
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure {
+  margin: 0;
+  padding: 0;
+  font-family: Lato, Raleway, Helvetica, Arial, sans-serif; }
+
+/**
+ * Page header
+ */
+.page-header {
+  margin: 0;
+  padding: 0;
+  text-align: center; }
+  .page-header nav {
+    padding: 10px; }
+  .page-header nav ul {
+    list-style: none; }
+  .page-header nav li {
+    display: inline-block; }
+    .page-header nav li:before {
+      content: "["; }
+    .page-header nav li:after {
+      content: "]"; }
+  .page-header nav a {
+    padding: 10px;
+    text-decoration: underline; }
+
+.page-footer {
+  font-size: 10px;
+  padding: 60px;
+  text-align: center; }
+
+#site-build {
+  font-size: 12px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  top: 0; }
+  #site-build a {
+    color: #ccc;
+    text-decoration: underline; }
+
+.site-intro {
+  margin: 20px;
+  padding: 40px;
+  text-align: center; }
+  .site-intro img {
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1); }
+  .site-intro h1 {
+    padding: 20px; }
+
+.post-list {
+  margin: 20px 0; }
+  .post-list h2 {
+    font-size: 18px;
+    text-align: center; }
+  .post-list ul {
+    font-size: 14px;
+    list-style: none;
+    margin: 20px; }
+  .post-list li {
+    border-top: 1px solid #ccc; }
+  .post-list li:last-child {
+    border-bottom: 1px solid #ccc; }
+  .post-list .post-list-meta {
+    color: grey; }
+  .post-list .post-list-title {
+    text-align: right; }
