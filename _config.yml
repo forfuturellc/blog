@@ -1,0 +1,17 @@
+# Site settings
+title: "Forfuture: Blog"
+email: "" # this is crawlable, quite easily
+description: >
+    Another Tech Blog, curated with content from our DevLife.
+baseurl: ""
+url: "http://blog.forfuture.co.ke"
+github_username: forfuturellc
+homepage: http://www.forfuture.co.ke
+
+# Build settings
+markdown: kramdown
+show_build_info: true
+exclude: [
+    ".gh-pages/",
+    "bower.json",
+]

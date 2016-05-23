@@ -1,0 +1,28 @@
+{
+  "name": "forfuture-blog",
+  "homepage": "https://github.com/forfuturellc/blog",
+  "authors": [
+    "GochoMugo (www.gmugo.in)"
+  ],
+  "description": "fftB | Forfuture Blog",
+  "main": "index.html",
+  "keywords": [
+    "forfuture",
+    "blog"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "assets",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "font-awesome": "^4.6.2",
+    "jquery": "^2.2.3"
+  }
+}

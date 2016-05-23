@@ -1,0 +1,36 @@
+/**
+ * Reset some basic elements
+ */
+body, h1, h2, h3, h4, h5, h6,
+p, blockquote, pre, hr,
+dl, dd, ol, ul, figure
+  margin: 0
+  padding: 0
+  font-family: $base-font-family
+
+
+/**
+ * Page header
+ */
+.page-header
+  margin: 0
+  padding: 0
+  text-align: center
+  nav
+    padding: 10px
+  nav ul
+    list-style: none
+  nav li
+    display: inline-block
+    &:before
+      content: '['
+    &:after
+      content: ']'
+  nav a
+    padding: 10px
+    text-decoration: underline
+
+.page-footer
+  font-size: 10px
+  padding: 60px
+  text-align: center

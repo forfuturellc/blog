@@ -1,0 +1,6 @@
+{% if site.show_build_info %}
+<section id="site-build" role="build">
+    <a id="build-link"
+       href="https://github.com/{{ site.github_username }}/blog/commit/{{ site.BUILD_HASH }}">BUILD #{{ site.BUILD_NUMBER }}</a>
+</section>
+{% endif %}

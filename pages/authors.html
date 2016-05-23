@@ -1,0 +1,43 @@
+---
+layout: page
+permalink: /authors
+css:
+  - /css/authors.css
+---
+
+
+<div class="authors">
+  <h2>Our Authors</h2>
+  <ul class="authors-list">
+      {% for a in site.data.authors.list %}
+      {% assign name = a[0] %}
+      {% assign author = a[1] %}
+      <li class="row">
+        <p class="authors-name col-md-3">{{ name }}</p>
+        <ul class="authors-meta col-md-9">
+          {% if author.mail_u and author.mail_d %}
+          <li>
+            <i class="fa fa-envelope"></i>
+            <a class="x-msg"
+               data-u="{{ author.mail_u }}"
+               data-d="{{ author.mail_d }}"
+               data-f="f" data-h="h"></a>
+          </li>
+          {% endif %}
+          {% if author.homepage %}
+          <li>
+            <i class="fa fa-globe"></i>
+            <a href="{{ author.homepage }}">{{ author.homepage }}</a>
+          </li>
+          {% endif %}
+          {% if author.github_username %}
+          <li>
+            <i class="fa fa-github"></i>
+            <a href="https://github.com/{{ author.github_username }}">{{ author.github_username }}</a>
+          </li>
+          {% endif %}
+        </ul>
+      </li>
+      {% endfor %}
+  </ul>
+</div>

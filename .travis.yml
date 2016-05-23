@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+- '2.2'
+branches:
+  except:
+  - gh-pages
+install: ".gh-pages/deps.sh"
+script: ".gh-pages/build.sh"
+after_success: ".gh-pages/deploy.sh"
+env:
+  global:
+  - DATA_DIR=.gh-pages
+  - OUT_DIR=_out
+  - secure: gHWWusrQrhxOYIAbw8E1Hrq4zVEX32wHrTdBp6to4c2YnfYL79JjtdkZQfvgwRSRnsHH+AXhovMN+eTY++xRB9eKCMyG82uKL5Te5ugiBgJm5saFkTVzZppjoLzRkxdp0ZjJJgvJWrdZCzsVhqiuZuV80GoL8+mq7u9LpmmW6gswM1XM/RRaLiCMJOOfo3gzi0Z7GBMrop3arIvRozoS4AWKro4EOSnSkM+gbfqQ991ZBai8/LzoPe/tX1K2yZS4xW8Fi9O/c8EhgkaTmJHw5KfQmd1+SD8AbX496zRAhQT78YVQrWnQAQEflohAp4QBW5EQzknfYIQGm7uobALWEmY7WqKG3zKbyQGYefAxQ9tVRP361yQgriwFitOh/UVmRRzX6SxFXxToJ1OkNsoPSndYqrAAGj9wRm3ygMevhZy+eIMzIjRqEvC/IQ922AEZ9tflQX2JdV84Am+DfW7c73hsPwwJ2xuOfe0amyyq90YbkSsIAlrJJNqn0PrCd4bgTT546wKZNnZixb+gZJQJEpjqSkzfVUt0urJ/tDJldq8SwMYxQrCppoziIRzs4NiZz08UnZ77hU2TVaDjMJgcgM3dm5Gre8GTGqiZJLl4wGIuPWR4btKpB+GyuJy2t5ZEwosCJmv01Kl482JyKC9wa+qnxq7wqW5DaT1uc4mGSNI=
