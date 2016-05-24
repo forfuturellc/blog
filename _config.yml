@@ -20,4 +20,5 @@ exclude: [
     "bower.json",
     "node_modules/",
     "package.json",
+    "README.md",
 ]
