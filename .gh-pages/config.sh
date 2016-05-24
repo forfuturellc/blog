@@ -1,4 +1,4 @@
-GIT_URL="https://github.com/forfuturellc/blog.git"
+GIT_URL="https://github.com/forfuturellc/forfuturellc.github.io.git"
 BRANCH="master"
 OUT_DIR="_out"
 USER_NAME="GochoMugo"
