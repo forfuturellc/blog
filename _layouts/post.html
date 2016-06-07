@@ -3,6 +3,13 @@ layout: default
 css:
   - /css/post.css
 ---
+
+{% if page.wip %}
+<div class="post-wip">
+    <span>work in progress</span>
+</div>
+{% endif %}
+
 <article class="post">
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
@@ -24,6 +31,13 @@ css:
         {% endif %}
         <span class="post-date"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time></span>
     </div>
+
+    <ul class="post-tags">
+        {% for tag in page.tags %}
+        <li><i class="fa fa-tag"></i> {{ tag }}</li>
+        {% endfor %}
+    </ul>
+
   </header>
 
   <div class="post-content" itemprop="articleBody">

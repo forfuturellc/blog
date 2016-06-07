@@ -14,12 +14,14 @@ css:
     <h2>Recent posts</h2>
     <ul>
         {% for post in site.posts %}
+        {% unless post.wip %}
         <li>
             <a href="{{ post.url | prepend: site.baseurl }}" class="row">
                 <span class="post-list-meta col-xs-3">{{ post.date | date: "%b %-d, %Y"  }}</span>
                 <p class="post-list-title col-xs-9">{{ post.title }}</p>
             </a>
         </li>
+        {% endunless %}
         {% endfor %}
     </ul>
 </div>
