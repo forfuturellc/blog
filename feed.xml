@@ -6,9 +6,117 @@
 </description>
     <link>http://blog.forfuture.co.ke/</link>
     <atom:link href="http://blog.forfuture.co.ke/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Tue, 24 May 2016 05:49:35 +0000</pubDate>
-    <lastBuildDate>Tue, 24 May 2016 05:49:35 +0000</lastBuildDate>
+    <pubDate>Tue, 07 Jun 2016 17:16:50 +0000</pubDate>
+    <lastBuildDate>Tue, 07 Jun 2016 17:16:50 +0000</lastBuildDate>
     <generator>Jekyll v3.1.6</generator>
+    
+      <item>
+        <title>Pothole, an API rate-limit respecting approach</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;This post presents a rather simple approach to handle &lt;em&gt;less frequent,
+short bursts&lt;/em&gt; of calls against a rate-limited API, for example,
+during application startup. Some compromising is intended to avoid
+having to require strict coordination of your application’s
+components in using the API. It can be viewed as &lt;strong&gt;throttling&lt;/strong&gt; with
+the added feature of &lt;strong&gt;queuing functions&lt;/strong&gt; for invocation at a later
+time.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In some applications relying on a third-party API for data retrieval,
+processing, etc., bursts of calls to the API may be experienced.
+In particular, during the startup phase of the application, we may
+require to fetch enormous amounts of data using multiple calls to the
+same API. For example, …&lt;/p&gt;
+
+&lt;p&gt;The simplicity of this approach however comes at a price. It can
+successfully applied in certain use cases with some trade-offs to consider.&lt;/p&gt;
+
+&lt;h2 id=&quot;terminology&quot;&gt;Terminology&lt;/h2&gt;
+
+&lt;p&gt;The rate-limiting parameters of the API are described here as follows:&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Given a rate-limit of 50 requests per second,&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;window&lt;/strong&gt;: time intervals between resetting of number of allowable requests.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;length of window&lt;/strong&gt;: time, usually in milliseconds, a window lasts. In the
+case above, the window’s length is &lt;em&gt;1 second (1000 ms)&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;size of window&lt;/strong&gt;: number of requests allowed in a window. Here above,
+the size is &lt;em&gt;50 requests&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;request&lt;/strong&gt;: a call to an API. It does not necessarily require it be over
+the network or be against a RESTful API. API of any kind should suffice.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;pothole&lt;/strong&gt;: a component that handles queueing and executing your functions
+as specified in the windows’ parameters.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;elaboration&quot;&gt;Elaboration&lt;/h2&gt;
+
+&lt;p&gt;For this approach to work seamlessly in an application, the following
+conditions would need to be satisfied:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;short window&lt;/strong&gt;: The window needs to be short enough to allow us to
+queue a request and wait for it to be completed in subsequent windows.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;moderate number of requests in a burst&lt;/strong&gt;: Preferably, have a request
+be statisfied across 2-3 windows, in a worst-case scenario.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Initially, we have an empty &lt;strong&gt;queue&lt;/strong&gt; managed by a &lt;strong&gt;pothole&lt;/strong&gt;. We
+define the size and length of the window for our API. Instead of executing
+our API calls directly, we queue them up in the pothole.&lt;/p&gt;
+
+&lt;p&gt;Let’s denote the number of remaining requests allowed as &lt;strong&gt;X&lt;/strong&gt;. Executing
+an API call (through the pothole) decrements &lt;strong&gt;X&lt;/strong&gt; by one each time.
+&lt;strong&gt;X&lt;/strong&gt; is set to the size of the window at start.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;While &lt;strong&gt;X&lt;/strong&gt; is greater than 0 (zero) and the queue is empty, the pothole
+executes the functions immediately without requiring to queue them&lt;/li&gt;
+  &lt;li&gt;(&lt;strong&gt;X&lt;/strong&gt; is 0 (zero)) Queue up the functions&lt;/li&gt;
+  &lt;li&gt;Once the current window expires,
+    &lt;ul&gt;
+      &lt;li&gt;&lt;strong&gt;X&lt;/strong&gt; is reset to the size of the window&lt;/li&gt;
+      &lt;li&gt;Queued-up functions are executed, in the order they were queued.&lt;/li&gt;
+      &lt;li&gt;Should the length of the queue exceed the size of the window, at its
+start, the functions remaining in the queue, once &lt;strong&gt;X&lt;/strong&gt; hits 0 in this
+window, will have to be executed in the next windows, in a similar
+fashion.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;drawbacks&quot;&gt;Drawbacks&lt;/h2&gt;
+
+&lt;p&gt;This approach can be difficult to use in such cases:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;high-level user request&lt;/strong&gt;: this refers to request from users in front
+of your application. Such applications need to be completed timely.
+Passing them through a pothole may hurt user experience due to unexpected
+lags.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;polling&lt;/strong&gt;: Functions doing polling should not be passed through
+pothole as the intervals will not be respected. Also, consider a case where
+two polling requests are queued up. Once conditions allow, the may both
+be executed in quick succession, having them use the same set of
+‘last-read’ parameters. This will make the second request mostly useless.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;extras&quot;&gt;Extras&lt;/h2&gt;
+
+&lt;p&gt;I built a &lt;a href=&quot;https://nodejs.org&quot;&gt;Node.js&lt;/a&gt; module, &lt;a href=&quot;https://npmjs.com/package/pothole&quot;&gt;pothole&lt;/a&gt;, to apply this approach
+in some of our applications.&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 07 Jun 2016 00:00:00 +0000</pubDate>
+        <link>http://blog.forfuture.co.ke/wip/3fbac913-3bd7-4135-9cdb-531362babcd2/</link>
+        <guid isPermaLink="true">http://blog.forfuture.co.ke/wip/3fbac913-3bd7-4135-9cdb-531362babcd2/</guid>
+        
+        <category>software architecture</category>
+        
+        
+      </item>
     
   </channel>
 </rss>

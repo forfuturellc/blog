@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>fftB | Pothole, an API rate-limit respecting approach</title>
+  <meta name="description" content="  This post presents a rather simple approach to handle less frequent,short bursts of calls against a rate-limited API, for example,during application startu...">
+
+  <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  
+    
+  <link rel="stylesheet" href="/css/post.css">
+    
+  
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Forfuture: Blog" href="http://blog.forfuture.co.ke/feed.xml" />
+</head>
+
+  <body class="container-fluid">
+    <header class="page-header">
+    
+<section id="site-build" role="build">
+    <a id="build-link"
+       href="https://github.com/forfuturellc/blog/commit/5a0a142c6fa048e79474cd587ada191916798e01">BUILD #8</a>
+</section>
+
+
+    <nav class="page-nav">
+        <ul>
+            <li><a href="/">top</a></li>
+            <li><a href="/authors">authors</a></li>
+            <li><a href="http://www.forfuture.co.ke" target="_blank">main website</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <section class="page-content row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+        
+<div class="post-wip">
+    <span>work in progress</span>
+</div>
+
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">Pothole, an API rate-limit respecting approach</h1>
+    <div class="post-meta">
+        
+        
+        <span class="post-author">GochoMugo</span>
+        
+        <span class="post-author-email">
+            <i class="fa fa-envelope"></i>
+            <a class="x-msg"
+               data-u="mugo"
+               data-d="forfuture.co.ke"
+               data-f="f" data-h="h"></a>
+        </span>
+        
+        <span class="post-author-homepage"><i class="fa fa-globe"></i> <a href="http://www.gmugo.in">http://www.gmugo.in</a></span>
+        <span class="post-author-github"><i class="fa fa-github"></i> <a href="https://github.com/GochoMugo">GochoMugo</a></span>
+        
+        <span class="post-date"><time datetime="2016-06-07T00:00:00+00:00" itemprop="datePublished">Jun 7, 2016</time></span>
+    </div>
+
+    <ul class="post-tags">
+        
+        <li><i class="fa fa-tag"></i> software architecture</li>
+        
+    </ul>
+
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <blockquote>
+  <p>This post presents a rather simple approach to handle <em>less frequent,
+short bursts</em> of calls against a rate-limited API, for example,
+during application startup. Some compromising is intended to avoid
+having to require strict coordination of your application’s
+components in using the API. It can be viewed as <strong>throttling</strong> with
+the added feature of <strong>queuing functions</strong> for invocation at a later
+time.</p>
+</blockquote>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>In some applications relying on a third-party API for data retrieval,
+processing, etc., bursts of calls to the API may be experienced.
+In particular, during the startup phase of the application, we may
+require to fetch enormous amounts of data using multiple calls to the
+same API. For example, …</p>
+
+<p>The simplicity of this approach however comes at a price. It can
+successfully applied in certain use cases with some trade-offs to consider.</p>
+
+<h2 id="terminology">Terminology</h2>
+
+<p>The rate-limiting parameters of the API are described here as follows:</p>
+
+<p><em>Given a rate-limit of 50 requests per second,</em></p>
+
+<ul>
+  <li><strong>window</strong>: time intervals between resetting of number of allowable requests.</li>
+  <li><strong>length of window</strong>: time, usually in milliseconds, a window lasts. In the
+case above, the window’s length is <em>1 second (1000 ms)</em>.</li>
+  <li><strong>size of window</strong>: number of requests allowed in a window. Here above,
+the size is <em>50 requests</em>.</li>
+  <li><strong>request</strong>: a call to an API. It does not necessarily require it be over
+the network or be against a RESTful API. API of any kind should suffice.</li>
+  <li><strong>pothole</strong>: a component that handles queueing and executing your functions
+as specified in the windows’ parameters.</li>
+</ul>
+
+<h2 id="elaboration">Elaboration</h2>
+
+<p>For this approach to work seamlessly in an application, the following
+conditions would need to be satisfied:</p>
+
+<ul>
+  <li><strong>short window</strong>: The window needs to be short enough to allow us to
+queue a request and wait for it to be completed in subsequent windows.</li>
+  <li><strong>moderate number of requests in a burst</strong>: Preferably, have a request
+be statisfied across 2-3 windows, in a worst-case scenario.</li>
+</ul>
+
+<p>Initially, we have an empty <strong>queue</strong> managed by a <strong>pothole</strong>. We
+define the size and length of the window for our API. Instead of executing
+our API calls directly, we queue them up in the pothole.</p>
+
+<p>Let’s denote the number of remaining requests allowed as <strong>X</strong>. Executing
+an API call (through the pothole) decrements <strong>X</strong> by one each time.
+<strong>X</strong> is set to the size of the window at start.</p>
+
+<ol>
+  <li>While <strong>X</strong> is greater than 0 (zero) and the queue is empty, the pothole
+executes the functions immediately without requiring to queue them</li>
+  <li>(<strong>X</strong> is 0 (zero)) Queue up the functions</li>
+  <li>Once the current window expires,
+    <ul>
+      <li><strong>X</strong> is reset to the size of the window</li>
+      <li>Queued-up functions are executed, in the order they were queued.</li>
+      <li>Should the length of the queue exceed the size of the window, at its
+start, the functions remaining in the queue, once <strong>X</strong> hits 0 in this
+window, will have to be executed in the next windows, in a similar
+fashion.</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="drawbacks">Drawbacks</h2>
+
+<p>This approach can be difficult to use in such cases:</p>
+
+<ul>
+  <li><strong>high-level user request</strong>: this refers to request from users in front
+of your application. Such applications need to be completed timely.
+Passing them through a pothole may hurt user experience due to unexpected
+lags.</li>
+  <li><strong>polling</strong>: Functions doing polling should not be passed through
+pothole as the intervals will not be respected. Also, consider a case where
+two polling requests are queued up. Once conditions allow, the may both
+be executed in quick succession, having them use the same set of
+‘last-read’ parameters. This will make the second request mostly useless.</li>
+</ul>
+
+<h2 id="extras">Extras</h2>
+
+<p>I built a <a href="https://nodejs.org">Node.js</a> module, <a href="https://npmjs.com/package/pothole">pothole</a>, to apply this approach
+in some of our applications.</p>
+
+
+  </div>
+</article>
+
+        </div>
+    </section>
+    
+<footer class="page-footer">
+  <p>Copyright &copy; Forfuture, LLC
+  &lt;<a class="x-msg"
+         data-u="we"
+         data-d="forfuture.co.ke"
+         data-f="f" data-h="h"></a>&gt;</p>
+  <p><a href="/tcs/">Terms and Conditions</a></p>
+</footer>
+
+
+    <script src="/assets/jquery/dist/jquery.min.js"></script>
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+  </body>
+</html>
