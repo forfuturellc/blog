@@ -20,5 +20,9 @@ gem install jekyll
 jekyll --version
 
 
+log "installing dependencies using \`bundle'"
+bundle install
+
+
 log "installing dependencies using \`npm'" 0
 npm install
