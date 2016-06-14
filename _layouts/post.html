@@ -44,4 +44,14 @@ css:
   <div class="post-content" itemprop="articleBody">
     {{ content }}
   </div>
+
+  <div class="post-footer">
+      {% if page.comments and site.comments %}
+      <div class="post-comments">
+        <a href="{{ site.baseurl }}/comments/{{ page.id | split:"/" | last }}" target="_blank">
+          goto comments; <i class="fa fa-arrow-circle-o-right"></i>
+        </a>
+      </div>
+      {% endif %}
+  </div>
 </article>
