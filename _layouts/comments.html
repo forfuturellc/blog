@@ -16,9 +16,15 @@ css:
 <div class="post-header comments-header">
   <h1 class="post-title">{{ the_post.title }}</h1>
   <h4>Comments Section</h4>
+  <div class="comments-goback">
+    <a href="{{ the_post.id | prepend: site.baseurl }}">~ Read the Post ~</a>
+  </div>
 </div>
 
-<div id="disqus_thread"></div>
+<div class="comments-content">
+  <div id="disqus_thread"></div>
+</div>
+
 <script>
     /**
      *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
