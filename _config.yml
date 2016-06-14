@@ -11,6 +11,7 @@ homepage: http://www.forfuture.co.ke
 # Build settings
 markdown: kramdown
 show_build_info: true
+comments: true
 exclude: [
     ".bowerrc",
     ".editorconfig",
