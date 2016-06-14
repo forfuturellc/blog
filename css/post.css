@@ -112,3 +112,9 @@ dl, dd, ol, ul, figure {
     padding: 8px;
     background: #d13434;
     border-radius: 4px; }
+
+.post-footer {
+  margin-top: 44px; }
+
+.post-comments {
+  text-align: right; }
