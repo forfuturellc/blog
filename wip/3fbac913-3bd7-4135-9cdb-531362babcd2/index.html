@@ -30,7 +30,7 @@
     
 <section id="site-build" role="build">
     <a id="build-link"
-       href="https://github.com/forfuturellc/blog/commit/9dfe370819bbbfe3085ff61ab9465d41a0143a9f">BUILD #12</a>
+       href="https://github.com/forfuturellc/blog/commit/7fbdb4e355aff9bf640ea2fa3852fa954a7ecf49">BUILD #13</a>
 </section>
 
 
@@ -171,6 +171,11 @@ pothole as the intervals will not be respected. Also, consider a case where
 two polling requests are queued up. Once conditions allow, the may both
 be executed in quick succession, having them use the same set of
 ‘last-read’ parameters. This will make the second request mostly useless.</li>
+  <li><strong>in-process functional</strong>: This is generally a problem with the
+implementation of the Pothole strategy. In my implementation,
+as used below in the demonstration, works with one process only.
+It is possible to implement the strategy for use in distributed
+fashions, such as in microservices.</li>
 </ul>
 
 <h2 id="demonstration">Demonstration</h2>
@@ -347,7 +352,21 @@ naive and for demonstration purposes.</p>
 50
 51
 52
-53</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'request'</span><span class="p">).</span><span class="nx">defaults</span><span class="p">({</span> <span class="na">json</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre></td><td class="code"><pre><span class="kd">var</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'request'</span><span class="p">).</span><span class="nx">defaults</span><span class="p">({</span> <span class="na">json</span><span class="p">:</span> <span class="kc">true</span> <span class="p">});</span>
 
 <span class="c1">// A multiplexer is exported by default. It basically manages your</span>
 <span class="c1">// potholes for you i.e. you do not have to create and start them</span>
@@ -360,6 +379,7 @@ naive and for demonstration purposes.</p>
 <span class="kd">var</span> <span class="nx">burst</span> <span class="o">=</span> <span class="mi">27</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">requestsDone</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">lastRequestTime</span><span class="p">;</span>
 
 
 <span class="c1">// We add a new `pothole` for the API labelled `my-api`, passing</span>
@@ -391,12 +411,25 @@ naive and for demonstration purposes.</p>
                 <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
                 <span class="nx">process</span><span class="p">.</span><span class="nx">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
             <span class="p">}</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'[%d] server response: remaining=%d'</span><span class="p">,</span> <span class="nx">requestsDone</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">remaining</span><span class="p">);</span>
+
+            <span class="c1">// Generating time diffs to demonstrate the momentary 'pause'</span>
+            <span class="c1">// after every 10 requests, as Pothole waits for the next</span>
+            <span class="c1">// window</span>
+            <span class="kd">var</span> <span class="nx">now</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+            <span class="kd">var</span> <span class="nx">timeDiff</span> <span class="o">=</span> <span class="nx">lastRequestTime</span> <span class="p">?</span> <span class="nx">now</span> <span class="o">-</span> <span class="nx">lastRequestTime</span> <span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="nx">lastRequestTime</span> <span class="o">=</span> <span class="nx">now</span><span class="p">;</span>
+
+            <span class="c1">// For testing purposes, we disable logging the time diff</span>
+            <span class="c1">// as it is not deterministic/constant. It will inevitably</span>
+            <span class="c1">// vary.</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NO_TIME_DIFF</span><span class="p">)</span> <span class="nx">timeDiff</span> <span class="o">=</span> <span class="s1">'?'</span><span class="p">;</span>
+
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'[%d] server response: remaining=%d +%sms'</span><span class="p">,</span> <span class="nx">requestsDone</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">remaining</span><span class="p">,</span> <span class="nx">timeDiff</span><span class="p">);</span>
 
             <span class="c1">// You need to stop your `pothole` so that the event loop</span>
             <span class="c1">// can exit cleanly. Why? A `pothole` uses a timer</span>
             <span class="c1">// internally.</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nx">requestsDone</span> <span class="o">==</span> <span class="nx">burst</span><span class="p">)</span> <span class="nx">pothole</span><span class="p">.</span><span class="nx">stop</span><span class="p">(</span><span class="s2">"my-api"</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">requestsDone</span> <span class="o">===</span> <span class="nx">burst</span><span class="p">)</span> <span class="nx">pothole</span><span class="p">.</span><span class="nx">stop</span><span class="p">(</span><span class="s2">"my-api"</span><span class="p">);</span>
         <span class="p">});</span>
     <span class="p">});</span>
 <span class="p">}</span><span class="w">
@@ -404,44 +437,67 @@ naive and for demonstration purposes.</p>
 
 </div>
 
-<p>The expected output:</p>
+<p>You can notice we are simply passing functions to the Pothole
+multiplexer above. This allows us to do almost anything within.
+We could be doing network requests, as above, or disk IO, etc.</p>
+
+<p>Sample output:</p>
 
 <div class="highlight-file">
 
-<figure class="highlight"><pre><code class="language-txt" data-lang="txt">[1] server response: remaining=9
-[2] server response: remaining=8
-[3] server response: remaining=7
-[4] server response: remaining=6
-[5] server response: remaining=5
-[6] server response: remaining=4
-[7] server response: remaining=3
-[8] server response: remaining=2
-[9] server response: remaining=1
-[10] server response: remaining=0
-[11] server response: remaining=9
-[12] server response: remaining=8
-[13] server response: remaining=7
-[14] server response: remaining=6
-[15] server response: remaining=5
-[16] server response: remaining=4
-[17] server response: remaining=3
-[18] server response: remaining=2
-[19] server response: remaining=1
-[20] server response: remaining=0
-[21] server response: remaining=9
-[22] server response: remaining=8
-[23] server response: remaining=7
-[24] server response: remaining=6
-[25] server response: remaining=5
-[26] server response: remaining=4
-[27] server response: remaining=3</code></pre></figure>
+<figure class="highlight"><pre><code class="language-txt" data-lang="txt">[1] server response: remaining=9 +0ms
+[2] server response: remaining=8 +2ms
+[3] server response: remaining=7 +1ms
+[4] server response: remaining=6 +0ms
+[5] server response: remaining=5 +1ms
+[6] server response: remaining=4 +0ms
+[7] server response: remaining=3 +0ms
+[8] server response: remaining=2 +1ms
+[9] server response: remaining=1 +0ms
+[10] server response: remaining=0 +0ms
+[11] server response: remaining=9 +29965ms
+[12] server response: remaining=8 +1ms
+[13] server response: remaining=7 +1ms
+[14] server response: remaining=6 +2ms
+[15] server response: remaining=5 +0ms
+[16] server response: remaining=4 +1ms
+[17] server response: remaining=3 +1ms
+[18] server response: remaining=2 +1ms
+[19] server response: remaining=1 +1ms
+[20] server response: remaining=0 +0ms
+[21] server response: remaining=9 +30005ms
+[22] server response: remaining=8 +2ms
+[23] server response: remaining=7 +0ms
+[24] server response: remaining=6 +1ms
+[25] server response: remaining=5 +1ms
+[26] server response: remaining=4 +2ms
+[27] server response: remaining=3 +1ms</code></pre></figure>
 
 </div>
 
-<p>Although the loop executes in its entirety without ever pausing to
-wait for a request to complete, the limit is never exceeded. Using
-Pothole we get the added advantage of waiting for the next window
-to execute our remaining requests.</p>
+<p>As you can notice after every 10 requests, there is an apparent
+pause of ~30,000ms (30 seconds). This is attributed to Pothole
+waiting for the next window before firing the queued requests.</p>
+
+<p>Although the <code class="highlighter-rouge">for</code> loop executes in its entirety without ever pausing to
+wait for a request to complete, the limit is never exceeded.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>The benefit of loose but effective coordination of usage of the
+API allows simpler architecture of application components. We
+generally do <strong>not</strong> have to worry of rate-limiting issues in
+suitable use cases. Pothole for the win!</p>
+
+<hr />
+
+<h4 id="references">References</h4>
+
+<ol>
+  <li><a href="https://nodejs.org">Node.js</a>: https://nodejs.org</li>
+  <li><a href="https://npmjs.com/package/pothole">pothole, npm package</a>: https://npmjs.com/package/pothole</li>
+  <li><a href="https://github.com/forfuturellc-x/blog-post-001">Github repository for this blog post</a>: https://github.com/forfuturellc-x/blog-post-001</li>
+</ol>
 
 
   </div>

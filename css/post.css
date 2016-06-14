@@ -88,6 +88,8 @@ dl, dd, ol, ul, figure {
   margin: 12px; }
 .post-content pre {
   margin: 12px; }
+.post-content hr {
+  margin-top: 24px; }
 
 .post-tags {
   text-align: center;
