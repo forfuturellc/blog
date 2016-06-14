@@ -46,3 +46,8 @@ dl, dd, ol, ul, figure {
   #site-build a {
     color: #ccc;
     text-decoration: underline; }
+
+.comments-goback {
+  padding-top: 24px; }
+  .comments-goback a {
+    text-decoration: underline; }
