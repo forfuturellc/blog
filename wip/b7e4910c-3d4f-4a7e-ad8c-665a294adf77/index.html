@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>fftB | A simple, super-powered file-pushing process</title>
+  <meta name="description" content="  This post introduces fpush, a library and terminal tool forpushing files to remote servers over multiple protocols,including (at time of writing) FTP and S...">
+
+  <link rel="stylesheet" href="/assets/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/main.css">
+
+  
+    
+  <link rel="stylesheet" href="/css/post.css">
+    
+  <link rel="stylesheet" href="/css/syntax.css">
+    
+  
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Forfuture: Blog" href="http://blog.forfuture.co.ke/feed.xml" />
+</head>
+
+  <body class="container-fluid">
+    <header class="page-header">
+    
+<section id="site-build" role="build">
+    <a id="build-link"
+       href="https://github.com/forfuturellc/blog/commit/86287b1e21aa3dac417d866be1e6ff09c0bb170d">BUILD #17</a>
+</section>
+
+
+    <nav class="page-nav">
+        <ul>
+            <li><a href="/">top</a></li>
+            <li><a href="/authors">authors</a></li>
+            <li><a href="http://www.forfuture.co.ke" target="_blank">main website</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <section class="page-content row">
+        <div class="col-xs-12 col-md-6 col-md-offset-3">
+        
+<div class="post-wip">
+    <span>work in progress</span>
+</div>
+
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title" itemprop="name headline">A simple, super-powered file-pushing process</h1>
+    <div class="post-meta">
+        
+        
+        <span class="post-author">GochoMugo</span>
+        
+        <span class="post-author-email">
+            <i class="fa fa-envelope"></i>
+            <a class="x-msg"
+               data-u="mugo"
+               data-d="forfuture.co.ke"
+               data-f="f" data-h="h"></a>
+        </span>
+        
+        <span class="post-author-homepage"><i class="fa fa-globe"></i> <a href="http://www.gmugo.in">http://www.gmugo.in</a></span>
+        <span class="post-author-github"><i class="fa fa-github"></i> <a href="https://github.com/GochoMugo">GochoMugo</a></span>
+        
+        <span class="post-date"><time datetime="2016-09-22T00:00:00+00:00" itemprop="datePublished">Sep 22, 2016</time></span>
+    </div>
+
+    <ul class="post-tags">
+        
+        <li><i class="fa fa-tag"></i> software architecture</li>
+        
+        <li><i class="fa fa-tag"></i> tools</li>
+        
+    </ul>
+
+  </header>
+
+  <div class="post-content" itemprop="articleBody">
+    <blockquote>
+  <p>This post introduces <strong>fpush</strong>, a library and terminal tool for
+<strong>pushing files to remote servers</strong> over multiple protocols,
+including (at time of writing) <a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol">FTP</a> and <a href="https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol">SFTP</a>.
+The library utilizes a <strong>push process</strong> designed to be <em>interruptible</em>
+(at a minimal cost) and <em>protocol-agnostic</em>.</p>
+</blockquote>
+
+<h3 id="table-of-contents">Table of Contents</h3>
+
+<ul>
+  <li><a href="#cli">Installing and Using fpush</a></li>
+  <li><a href="#push-process">The Push Process</a></li>
+  <li><a href="#protocol-support">Protocol Support</a></li>
+</ul>
+
+<p><a name="cli"></a></p>
+
+<h2 id="installing-and-using-fpush">Installing and Using fpush</h2>
+
+<p>You need to have [Node.js][node] (with <a href="https://npmjs.com">npm</a>) to be installed. In your
+terminal:</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">$ </span>npm install fpush --global</code></pre></figure>
+
+<p>This will install the command <code class="highlighter-rouge">fpush</code> globally from https://npmjs.com/package/fpush.</p>
+
+<p><a name="push-process"></a></p>
+
+<h2 id="the-push-process">The Push Process</h2>
+
+<p><a name="protocol-support"></a></p>
+
+<h2 id="protocol-support">Protocol Support</h2>
+
+<hr />
+
+<h4 id="references">References</h4>
+
+<ol>
+  <li><a href="https://github.com/forfuturellc/fpush">fpush - source code</a>: https://github.com/forfuturellc/fpush</li>
+  <li><a href="https://en.wikipedia.org/wiki/File_Transfer_Protocol">FTP (Wikipedia)</a>: https://en.wikipedia.org/wiki/File_Transfer_Protocol</li>
+  <li><a href="https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol">SFTP (Wikipedia)</a>: https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol</li>
+</ol>
+
+
+  </div>
+
+  <div class="post-footer">
+      
+      <div class="post-comments">
+        <a href="/comments/999" target="_blank">
+          goto comments; <i class="fa fa-arrow-circle-o-right"></i>
+        </a>
+      </div>
+      
+  </div>
+</article>
+
+        </div>
+    </section>
+    
+<footer class="page-footer">
+  <p>Copyright &copy; Forfuture, LLC
+  &lt;<a class="x-msg"
+         data-u="we"
+         data-d="forfuture.co.ke"
+         data-f="f" data-h="h"></a>&gt;</p>
+  <p><a href="/tcs/">Terms and Conditions</a></p>
+</footer>
+
+
+    <script src="/assets/jquery/dist/jquery.min.js"></script>
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+  </body>
+</html>
