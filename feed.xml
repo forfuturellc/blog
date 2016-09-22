@@ -6,68 +6,9 @@
 </description>
     <link>http://blog.forfuture.co.ke/</link>
     <atom:link href="http://blog.forfuture.co.ke/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 22 Sep 2016 07:52:19 +0000</pubDate>
-    <lastBuildDate>Thu, 22 Sep 2016 07:52:19 +0000</lastBuildDate>
+    <pubDate>Thu, 22 Sep 2016 07:54:35 +0000</pubDate>
+    <lastBuildDate>Thu, 22 Sep 2016 07:54:35 +0000</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
-    
-      <item>
-        <title>A simple, super-powered file-pushing process</title>
-        <description>&lt;blockquote&gt;
-  &lt;p&gt;This post introduces &lt;strong&gt;fpush&lt;/strong&gt;, a library and terminal tool for
-&lt;strong&gt;pushing files to remote servers&lt;/strong&gt; over multiple protocols,
-including (at time of writing) &lt;a href=&quot;https://en.wikipedia.org/wiki/File_Transfer_Protocol&quot;&gt;FTP&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol&quot;&gt;SFTP&lt;/a&gt;.
-The library utilizes a &lt;strong&gt;push process&lt;/strong&gt; designed to be &lt;em&gt;interruptible&lt;/em&gt;
-(at a minimal cost) and &lt;em&gt;protocol-agnostic&lt;/em&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#cli&quot;&gt;Installing and Using fpush&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#push-process&quot;&gt;The Push Process&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#protocol-support&quot;&gt;Protocol Support&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;a name=&quot;cli&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;installing-and-using-fpush&quot;&gt;Installing and Using fpush&lt;/h2&gt;
-
-&lt;p&gt;You need to have [Node.js][node] (with &lt;a href=&quot;https://npmjs.com&quot;&gt;npm&lt;/a&gt;) to be installed. In your
-terminal:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;npm install fpush --global&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;This will install the command &lt;code class=&quot;highlighter-rouge&quot;&gt;fpush&lt;/code&gt; globally from https://npmjs.com/package/fpush.&lt;/p&gt;
-
-&lt;p&gt;&lt;a name=&quot;push-process&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;the-push-process&quot;&gt;The Push Process&lt;/h2&gt;
-
-&lt;p&gt;&lt;a name=&quot;protocol-support&quot;&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;protocol-support&quot;&gt;Protocol Support&lt;/h2&gt;
-
-&lt;hr /&gt;
-
-&lt;h4 id=&quot;references&quot;&gt;References&lt;/h4&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/forfuturellc/fpush&quot;&gt;fpush - source code&lt;/a&gt;: https://github.com/forfuturellc/fpush&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/File_Transfer_Protocol&quot;&gt;FTP (Wikipedia)&lt;/a&gt;: https://en.wikipedia.org/wiki/File_Transfer_Protocol&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol&quot;&gt;SFTP (Wikipedia)&lt;/a&gt;: https://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol&lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Thu, 22 Sep 2016 00:00:00 +0000</pubDate>
-        <link>http://blog.forfuture.co.ke/wip/b7e4910c-3d4f-4a7e-ad8c-665a294adf77/</link>
-        <guid isPermaLink="true">http://blog.forfuture.co.ke/wip/b7e4910c-3d4f-4a7e-ad8c-665a294adf77/</guid>
-        
-        <category>software architecture</category>
-        
-        <category>tools</category>
-        
-        
-      </item>
     
       <item>
         <title>Pothole, an API rate-limit respecting approach</title>
@@ -492,6 +433,41 @@ suitable use cases. Pothole for the win!&lt;/p&gt;
         <pubDate>Tue, 14 Jun 2016 00:00:00 +0000</pubDate>
         <link>http://blog.forfuture.co.ke/posts/001/</link>
         <guid isPermaLink="true">http://blog.forfuture.co.ke/posts/001/</guid>
+        
+        <category>software architecture</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>2PU, 2-Phase Asset Upload Strategy</title>
+        <description>&lt;blockquote&gt;
+  &lt;p&gt;Presenting a strategy of uploading assets onto a remote server
+in 2 phases; &lt;strong&gt;receive&lt;/strong&gt; phase and &lt;strong&gt;accept&lt;/strong&gt; phase. This is
+intended to &lt;strong&gt;reduce resource usage during uploads&lt;/strong&gt; without
+increasing much complexity in the support code.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;Modern applications have reason to handle different types of files.
+A more regular application would want to support profile pictures. A
+hosted accounting service would want to allow uploading spreadsheets
+for data entry and processing. The purposes span a wide range of use
+cases.&lt;/p&gt;
+
+&lt;h2 id=&quot;terminology&quot;&gt;Terminology&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;asset&lt;/strong&gt;: file of any type for use in an application&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;elaboration&quot;&gt;Elaboration&lt;/h2&gt;
+
+</description>
+        <pubDate>Mon, 13 Jun 2016 00:00:00 +0000</pubDate>
+        <link>http://blog.forfuture.co.ke/wip/4d4a3f72-46c9-469b-ac6d-0ef2557ac226/</link>
+        <guid isPermaLink="true">http://blog.forfuture.co.ke/wip/4d4a3f72-46c9-469b-ac6d-0ef2557ac226/</guid>
         
         <category>software architecture</category>
         
