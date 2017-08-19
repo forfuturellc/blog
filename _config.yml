@@ -4,9 +4,9 @@ email: "" # this is crawlable, quite easily
 description: >
     Another Tech Blog, curated with content from our DevLife.
 baseurl: ""
-url: "http://blog.forfuture.co.ke"
+url: "https://blog.forfuture.tech"
 github_username: forfuturellc
-homepage: http://www.forfuture.co.ke
+homepage: https://www.forfuture.tech
 
 # Build settings
 markdown: kramdown
